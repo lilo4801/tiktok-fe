@@ -13,6 +13,10 @@ const publicRoutes = [
         component: Following,
     },
     {
+        path: '/:nickname',
+        component: Following,
+    },
+    {
         path: '/upload',
         component: Upload,
         layout: HeaderOnly,
