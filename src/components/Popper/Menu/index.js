@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function Menu({ items = [], children }) {
+function Menu({ items = [], children, ...passProps }) {
     const [history, setHistory] = useState([{ data: items }]);
     const current = history[history.length - 1];
 
@@ -40,11 +40,12 @@ function Menu({ items = [], children }) {
             placement="bottom-end"
             delay={[0, 800]}
             offset={[12, 8]}
+            hideOnClick={false}
             render={(attrs) => (
                 <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
                     <PopperWrapper className={cx('menu-popper')}>
                         {history.length > 1 && <Header onBack={handleBackMenu} title="Language" />}
-                        {renderItems()}
+                        <div className={cx('body')}>{renderItems()}</div>
                     </PopperWrapper>
                 </div>
             )}

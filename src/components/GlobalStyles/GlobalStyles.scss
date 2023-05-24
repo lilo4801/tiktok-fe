@@ -9,6 +9,7 @@
     --white: #fff;
     --black: #000;
     --text-color: #161823;
+    --font-family: 'ProximaNova', sans-serif;
 }
 
 * {
@@ -48,11 +49,12 @@ html {
 }
 
 body {
-    font-family: 'ProximaNova', sans-serif;
+    font-family: var(--font-family);
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizespeed;
     color: var(--text-color);
+    overflow-y: overlay;
     .tippy-box {
         border-radius: 8px;
         font-weight: 600;
@@ -72,6 +74,36 @@ body {
     .tippy-box[data-placement^='bottom'] > .tippy-arrow:before {
         top: -8px;
     }
+}
+// Scrollbar CSS
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 button,

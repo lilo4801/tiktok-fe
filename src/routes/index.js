@@ -1,23 +1,24 @@
 import Home from '~/pages/Home';
 import Following from '~/pages/Following';
 import Upload from '~/pages/Upload';
-import { HeaderOnly } from '~/components/Layout';
+import { HeaderOnly } from '~/layouts';
+import config from '~/config';
 
 const publicRoutes = [
     {
-        path: '/',
+        path: config.routes.home,
         component: Home,
     },
     {
-        path: '/following',
+        path: config.routes.following,
         component: Following,
     },
     {
-        path: '/:nickname',
+        path: config.routes.profile,
         component: Following,
     },
     {
-        path: '/upload',
+        path: config.routes.upload,
         component: Upload,
         layout: HeaderOnly,
     },
