@@ -3,6 +3,7 @@ import Following from '~/pages/Following';
 import Upload from '~/pages/Upload';
 import { HeaderOnly } from '~/layouts';
 import config from '~/config';
+import Live from '~/pages/Live/Live';
 
 const publicRoutes = [
     {
@@ -21,6 +22,10 @@ const publicRoutes = [
         path: config.routes.upload,
         component: Upload,
         layout: HeaderOnly,
+    },
+    {
+        path: config.routes.live,
+        component: Live,
     },
 ];
 

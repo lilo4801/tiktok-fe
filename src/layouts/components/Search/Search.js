@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 function Search() {
     const [searchResults, setSearchResults] = useState([]);
     const [searchValue, setSearchValue] = useState('');
-    const [showResult, setShowResut] = useState(true);
+    const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const debounceValue = useDebounce(searchValue, 500);
@@ -39,7 +39,7 @@ function Search() {
     }, [debounceValue]);
 
     const handleHideResults = () => {
-        setShowResut(false);
+        setShowResult(false);
     };
 
     const handleChange = (e) => {
@@ -50,6 +50,11 @@ function Search() {
         }
     };
 
+    const handleClearValueInput = () => {
+        setSearchValue('');
+        setSearchResults([]);
+        searchInput.current.focus();
+    };
     return (
         <div>
             <HeadlessTippy
@@ -76,17 +81,10 @@ function Search() {
                         placeholder="Search"
                         spellCheck={false}
                         onChange={handleChange}
-                        onFocus={() => setShowResut(true)}
+                        onFocus={() => setShowResult(true)}
                     />
                     {!!searchValue && !loading && (
-                        <button
-                            className={cx('clear')}
-                            onClick={() => {
-                                setSearchValue('');
-                                setSearchResults([]);
-                                searchInput.current.focus();
-                            }}
-                        >
+                        <button className={cx('clear')} onClick={handleClearValueInput}>
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
                     )}
