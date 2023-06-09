@@ -1,0 +1,157 @@
+.wrapper {
+    padding: 16px 0;
+    color: rgba(22, 24, 35, 0.75);
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: 20px;
+    position: relative;
+
+    & .label {
+        padding: 0 8px;
+        margin-bottom: 8px;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        left: 8px;
+        right: 8px;
+        top: 0;
+        height: 1px;
+        background-color: rgba(22, 24, 35, 0.12);
+        -webkit-transform: scaleY(0.5);
+        -moz-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+    }
+    & .btn-more {
+        background: transparent;
+        padding: 0px 8px;
+        margin-top: 8px;
+        cursor: pointer;
+    }
+    & .extend {
+        color: rgb(254, 44, 85);
+        font-weight: 600;
+        font-size: 1.2rem;
+        line-height: 20px;
+    }
+}
+
+.account-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(22, 24, 35, 0.03);
+    }
+    & .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    & .item-info {
+        flex: 1;
+        margin-left: 12px;
+    }
+    & .nickname {
+        color: rgb(22, 24, 35);
+        font-weight: 700;
+        font-size: 1.6rem;
+        line-height: 22px;
+        margin-top: -2px;
+        max-width: 145px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    & .fullname {
+        font-size: 1.4rem;
+        color: rgba(22, 24, 35, 0.75);
+        font-weight: 400;
+        font-size: 1.2rem;
+        line-height: 15px;
+        max-width: 145px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    & .check {
+        margin-left: 6px;
+    }
+}
+
+.account-preview-loading {
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 48px;
+
+    & .avatar-loading {
+        width: 32px;
+        height: 32px;
+        background-color: rgba(22, 24, 35, 0.06);
+        border-radius: 4px;
+        background-image: linear-gradient(
+            90deg,
+            rgba(22, 24, 35, 0) 0%,
+            rgba(22, 24, 35, 0.04) 50%,
+            rgba(22, 24, 35, 0) 100%
+        );
+        -webkit-background-size: 200% 100%;
+        background-size: 200% 100%;
+        background-repeat: no-repeat;
+        border-radius: 100%;
+        animation: animation-show cubic-bezier(0, 0, 1, 1) 1.5s infinite;
+    }
+    & .info-loading {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 48px;
+        margin-left: 12px;
+    }
+    & .nickname-loading {
+        width: 107px;
+        height: 12px;
+        background-color: rgba(22, 24, 35, 0.06);
+        border-radius: 4px;
+        background-image: linear-gradient(
+            90deg,
+            rgba(22, 24, 35, 0) 0%,
+            rgba(22, 24, 35, 0.04) 50%,
+            rgba(22, 24, 35, 0) 100%
+        );
+        background-size: 200% 100%;
+        background-repeat: no-repeat;
+        animation: animation-show cubic-bezier(0, 0, 1, 1) 1.5s infinite;
+    }
+    & .fullname-loading {
+        width: 66px;
+        height: 12px;
+        background-color: rgba(22, 24, 35, 0.06);
+        border-radius: 4px;
+        background-image: linear-gradient(
+            90deg,
+            rgba(22, 24, 35, 0) 0%,
+            rgba(22, 24, 35, 0.04) 50%,
+            rgba(22, 24, 35, 0) 100%
+        );
+
+        background-size: 200% 100%;
+        background-repeat: no-repeat;
+        animation: animation-show cubic-bezier(0, 0, 1, 1) 1.5s infinite;
+    }
+}
+
+@keyframes animation-show {
+    0% {
+        background-position-x: 200%;
+    }
+    100% {
+        background-position-x: -150%;
+    }
+}

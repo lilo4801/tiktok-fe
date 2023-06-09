@@ -84,3 +84,9 @@
     padding: 14px 16px;
     min-width: 140px;
 }
+
+//  primary color outline
+.primaryColor {
+    color: var(--primary);
+    border-color: var(--primary);
+}

@@ -4,4 +4,14 @@
     padding-left: 8px;
     padding-bottom: 26px;
     margin-left: -18px;
+    height: 100%;
+    overflow-y: hidden;
+
+    &:hover {
+        overflow-y: overlay;
+    }
+    & .container {
+        height: 1122px;
+        max-height: 5074px;
+    }
 }

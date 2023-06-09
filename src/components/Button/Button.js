@@ -15,6 +15,7 @@ function Button({
     small = false,
     large = false,
     disabled = false,
+    primaryColor = false,
     leftIcon,
     rightIcon,
     className,
@@ -44,6 +45,7 @@ function Button({
         small,
         large,
         text,
+        primaryColor,
         disabled,
     });
 
@@ -67,6 +69,7 @@ Button.propTypes = {
     small: PropTypes.bool,
     large: PropTypes.bool,
     disabled: PropTypes.bool,
+    primaryColor: PropTypes.bool,
     leftIcon: PropTypes.node,
     rightIcon: PropTypes.node,
     className: PropTypes.string,

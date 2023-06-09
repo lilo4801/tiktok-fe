@@ -2,11 +2,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 752px;
+    max-height: 5074px;
+    overflow-y: hidden;
 }
 
 .container {
     width: var(--default-layout-width);
     max-width: 100%;
+    height: 100%;
     display: flex;
     padding: 0 var(--default-layout-horizontal-spacer);
     margin-top: var(--default-layout-header-height);
@@ -14,4 +18,10 @@
 
 .content {
     flex: 1;
+    height: 100%;
+    overflow-y: overlay;
+    & .container-content {
+        height: 1122px;
+        max-height: 5074px;
+    }
 }
