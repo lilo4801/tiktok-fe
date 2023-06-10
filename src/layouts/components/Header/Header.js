@@ -18,11 +18,25 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import classNames from 'classnames/bind';
 import Menu from '~/components/Popper/Menu';
-import { InboxIcon, MessageIcon, UploadIcon } from '~/components/Icons';
+import {
+    CloseIcon,
+    InboxIcon,
+    LoginWithAccountIcon,
+    LoginWithGoogleIcon,
+    LoginWithInstagramIcon,
+    LoginWithLINEIcon,
+    LoginWithQRCodeIcon,
+    LoginWithTwitterIcon,
+    MessageIcon,
+    UploadIcon,
+} from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '~/layouts/components/Search';
 import { Link } from 'react-router-dom';
 import config from '~/config';
+import { useState } from 'react';
+import Modal from '~/components/Modal/Modal';
+import LoginItem from './LoginItem';
 
 const cx = classNames.bind(styles);
 
@@ -33,78 +47,6 @@ const MENU_ITEMS = [
         children: {
             title: 'Language',
             data: [
-                {
-                    code: 'en',
-                    title: 'English',
-                },
-                {
-                    code: 'vi',
-                    title: 'Tieng Viet',
-                },
-                {
-                    code: 'Jp',
-                    title: 'Japan',
-                },
-                {
-                    code: 'en',
-                    title: 'English',
-                },
-                {
-                    code: 'vi',
-                    title: 'Tieng Viet',
-                },
-                {
-                    code: 'Jp',
-                    title: 'Japan',
-                },
-                {
-                    code: 'en',
-                    title: 'English',
-                },
-                {
-                    code: 'vi',
-                    title: 'Tieng Viet',
-                },
-                {
-                    code: 'Jp',
-                    title: 'Japan',
-                },
-                {
-                    code: 'en',
-                    title: 'English',
-                },
-                {
-                    code: 'vi',
-                    title: 'Tieng Viet',
-                },
-                {
-                    code: 'Jp',
-                    title: 'Japan',
-                },
-                {
-                    code: 'en',
-                    title: 'English',
-                },
-                {
-                    code: 'vi',
-                    title: 'Tieng Viet',
-                },
-                {
-                    code: 'Jp',
-                    title: 'Japan',
-                },
-                {
-                    code: 'en',
-                    title: 'English',
-                },
-                {
-                    code: 'vi',
-                    title: 'Tieng Viet',
-                },
-                {
-                    code: 'Jp',
-                    title: 'Japan',
-                },
                 {
                     code: 'en',
                     title: 'English',
@@ -161,8 +103,49 @@ const USER_MENU = [
     },
 ];
 
+const MENU_AUTH = {
+    signin: {
+        title: 'Log in to Tiktok',
+        data: [
+            { icon: <LoginWithQRCodeIcon />, title: 'Use QR code' },
+            { icon: <LoginWithAccountIcon />, title: 'Use phone / email / username' },
+            { icon: <LoginWithGoogleIcon />, title: 'Continue with Google' },
+            { icon: <LoginWithTwitterIcon />, title: 'Continue with Twitter' },
+            { icon: <LoginWithLINEIcon />, title: 'Continue with LINE' },
+            { icon: <LoginWithInstagramIcon />, title: 'Continue with Instagram' },
+            { icon: <LoginWithQRCodeIcon />, title: 'Use QR code' },
+            { icon: <LoginWithAccountIcon />, title: 'Use phone / email / username' },
+            { icon: <LoginWithGoogleIcon />, title: 'Continue with Google' },
+            { icon: <LoginWithTwitterIcon />, title: 'Continue with Twitter' },
+            { icon: <LoginWithLINEIcon />, title: 'Continue with LINE' },
+            { icon: <LoginWithInstagramIcon />, title: 'Continue with Instagram' },
+        ],
+        titleFooter: "Don't have an account?",
+        button: 'Sign up',
+    },
+    signup: {
+        title: 'Sign up for Tiktok',
+        data: [
+            { icon: <LoginWithAccountIcon />, title: 'Use phone / email / username' },
+            { icon: <LoginWithGoogleIcon />, title: 'Continue with Google' },
+            { icon: <LoginWithTwitterIcon />, title: 'Continue with Twitter' },
+            { icon: <LoginWithLINEIcon />, title: 'Continue with LINE' },
+            { icon: <LoginWithInstagramIcon />, title: 'Continue with Instagram' },
+        ],
+        titleFooter: 'Already have an account?',
+        button: 'Log in',
+    },
+};
+
 function Header() {
-    const currentUser = true;
+    const currentUser = false;
+    const [isAlreadyAccount, setIsAlreadyAccount] = useState(false);
+    const [showModalLogin, setShowModalLogin] = useState(false);
+
+    let showMenuAuth = isAlreadyAccount ? MENU_AUTH.signin : MENU_AUTH.signup;
+    const handleShowClose = () => {
+        setShowModalLogin(!showModalLogin);
+    };
 
     return (
         <header className={cx('wrapper')}>
@@ -196,7 +179,40 @@ function Header() {
                             <Button outline leftIcon={<FontAwesomeIcon icon={faArrowUp} />}>
                                 Upload
                             </Button>
-                            <Button primary>Log in</Button>
+                            <Button primary onClick={handleShowClose}>
+                                Log in
+                            </Button>
+                            <Modal show={showModalLogin}>
+                                <div className={cx('modal-login')}>
+                                    <h2>{showMenuAuth.title}</h2>
+                                    <div className={cx('modal-login-content')}>
+                                        <div className={cx('type-login-box')}>
+                                            {showMenuAuth.data.map((item, index) => {
+                                                return <LoginItem key={index} data={item} />;
+                                            })}
+                                        </div>
+                                    </div>
+                                    <div className={cx('policy-box')}>
+                                        <p className={cx('login-policy')}>
+                                            By continuing, you agree to TikTok’s Terms of Service and confirm that you
+                                            have read TikTok’s Privacy Policy.
+                                        </p>
+                                    </div>
+                                    <div className={cx('footer-modal')}>
+                                        <p>{showMenuAuth.titleFooter}</p>
+                                        <Button
+                                            onClick={() => setIsAlreadyAccount((prev) => !prev)}
+                                            className={cx('button-signup-text')}
+                                            text
+                                        >
+                                            <p>{showMenuAuth.button}</p>
+                                        </Button>
+                                    </div>
+                                    <div onClick={handleShowClose} className={cx('close-modal')}>
+                                        <CloseIcon />
+                                    </div>
+                                </div>
+                            </Modal>
                         </>
                     )}
                     <Menu items={currentUser ? USER_MENU : MENU_ITEMS}>

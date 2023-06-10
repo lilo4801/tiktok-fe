@@ -65,3 +65,107 @@
     margin-left: 12px;
     cursor: pointer;
 }
+
+.modal-login {
+    flex: 1 1 0%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    & .modal-login-content {
+        width: 375px;
+        margin: auto;
+        padding: unset;
+        display: flex;
+        flex-direction: column;
+    }
+    & h2 {
+        color: rgb(22, 24, 35);
+        font-size: 3.2rem;
+        margin: 16px auto;
+        font-weight: bold;
+        text-align: center;
+    }
+    & .type-login-box {
+        display: flex;
+        flex-direction: column;
+    }
+    & .close-modal {
+        position: absolute;
+        top: 24px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+        right: 24px;
+        width: 24px;
+        height: 24px;
+        background: rgba(22, 24, 35, 0.03);
+        transform: scale(1.7);
+    }
+    & .policy-box {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgb(255, 255, 255);
+        border-bottom: 1px solid rgba(22, 24, 35, 0.12);
+        border-top-color: rgba(22, 24, 35, 0.12);
+        border-right-color: rgba(22, 24, 35, 0.12);
+        border-left-color: rgba(22, 24, 35, 0.12);
+        padding: 16px 30px;
+        margin-bottom: unset;
+        & .login-policy {
+            color: rgba(22, 24, 35, 0.5);
+            font-size: 1.2rem;
+            line-height: 15px;
+            width: 375px;
+            text-align: center;
+        }
+    }
+
+    & .footer-modal {
+        color: rgb(22, 24, 35);
+        height: 64px;
+        border-top: 1px solid rgba(22, 24, 35, 0.12);
+        margin: unset;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        line-height: 18px;
+    }
+    & .button-signup-text {
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 12px;
+        padding: 0;
+        min-width: none;
+    }
+}
+.login-item {
+    display: flex;
+    flex-direction: row;
+    color: rgb(22, 24, 35);
+    font-weight: 600;
+    border: 1px solid rgba(22, 24, 35, 0.12);
+    font-size: 1.5rem;
+    border-radius: 0px;
+    padding: 0px 12px;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 16px;
+    word-break: keep-all;
+    white-space: nowrap;
+    background: rgb(255, 255, 255);
+    & .icon-login {
+        left: 12px;
+        font-size: 20px;
+        position: absolute;
+        display: flex;
+    }
+}
