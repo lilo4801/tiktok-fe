@@ -1,0 +1,275 @@
+.wrapper {
+    margin-bottom: 160px;
+    & .container {
+    }
+    & .description-title {
+        color: rgb(22, 24, 35);
+        font-weight: 600;
+        font-size: 15px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        align-items: center;
+    }
+    & .switch-type {
+        color: rgba(22, 24, 35, 0.75);
+        font-weight: 600;
+        font-size: 1.2rem;
+        display: inline-block;
+    }
+    & .input-box {
+        margin-bottom: 9px;
+    }
+    & .selection-container {
+        position: relative;
+        cursor: pointer;
+    }
+    & .selection {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        padding: 12px;
+        height: 44px;
+        & span {
+            font-size: 16px;
+            line-height: 1;
+            color: rgb(22, 24, 35);
+            margin-inline-end: 12px;
+        }
+        & .icon-dropdown {
+            transform: rotateZ(0deg);
+            transition: all 0.3s ease 0s;
+        }
+        & .icon-dropdown-rotate {
+            transform: rotateZ(180deg);
+            transition: all 0.3s ease 0s;
+        }
+        &::after {
+            content: '';
+            width: 1px;
+            height: 30px;
+            background: rgba(22, 24, 35, 0.12);
+            right: 0px;
+            left: unset;
+            position: absolute;
+        }
+    }
+}
+
+.phone-input-box {
+    background: rgba(22, 24, 35, 0.06);
+    border: 1px solid rgba(22, 24, 35, 0.12);
+    transition: all 0.3s ease 0s;
+    border-radius: 4px;
+    display: flex;
+    & .input-container {
+        position: relative;
+        flex: 1 1 0%;
+        width: 0px;
+        margin-bottom: 0px;
+        & input {
+            background: transparent;
+            border-radius: 2px;
+            border: none rgba(22, 24, 35, 0.12);
+            padding-inline-start: 12px;
+            color: rgb(22, 24, 35);
+            line-height: 100%;
+            outline: none;
+            font-size: 1.5rem;
+            height: 44px;
+            caret-color: rgb(254, 44, 85);
+            width: 100%;
+            padding-inline-end: unset;
+        }
+    }
+}
+
+.password-input-box {
+    & .input-container {
+        & input {
+            border-radius: 2px;
+            background-color: rgba(22, 24, 35, 0.06);
+            border: 1px solid rgba(22, 24, 35, 0.12);
+            padding-inline: 12px 24px;
+            color: rgb(22, 24, 35);
+            line-height: 100%;
+            outline: none;
+            font-size: 1.5rem;
+            height: 44px;
+            caret-color: rgb(254, 44, 85);
+            width: 100%;
+        }
+    }
+    & .icon-container {
+        right: 0px;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 0px;
+        height: 44px;
+        padding-inline-end: 16px;
+    }
+}
+.description-title-password {
+    display: flex;
+    align-items: center;
+    margin-top: 9px;
+}
+
+.split-line {
+    width: 1px;
+    height: 12px;
+    margin: 0px 16px;
+    background: rgba(22, 24, 35, 0.12);
+}
+
+.btn-login {
+    padding: 6px 8px;
+    width: 100%;
+    margin-top: 21px;
+    &:disabled {
+        border: none;
+        color: rgba(22, 24, 35, 0.34);
+        background-color: rgba(22, 24, 35, 0.06);
+        pointer-events: none;
+    }
+}
+
+// input code
+.code-input-box {
+    transition: all 0.3s ease 0s;
+    display: flex;
+    justify-content: space-between;
+    & .input-container {
+        position: relative;
+        margin-bottom: 9px;
+        flex: 1 1 0%;
+        width: 0px;
+    }
+    & input {
+        border-radius: 2px;
+        background-color: rgba(22, 24, 35, 0.06);
+        border: 1px solid rgba(22, 24, 35, 0.12);
+        padding-inline-start: 12px;
+        color: rgb(22, 24, 35);
+        line-height: 100%;
+        outline: none;
+        font-size: 16px;
+        height: 44px;
+        caret-color: rgb(254, 44, 85);
+        width: 100%;
+        padding-inline-end: unset;
+    }
+    & .vertical-line {
+        right: 0px;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        position: absolute;
+        top: 0px;
+        height: 44px;
+        padding-inline-end: 16px;
+    }
+}
+.btn-send-code {
+    color: rgb(22, 24, 35);
+    font-weight: 600;
+    margin: 0px;
+    background-color: rgba(22, 24, 35, 0.06);
+    border-color: rgba(22, 24, 35, 0.12);
+    border-width: 1.5px;
+    border-style: solid;
+    border-radius: 0px 4px 4px 0px;
+    border-inline-start-width: 1.5px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0px 16px;
+    height: 44px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+.loading-code-icon {
+    margin-left: 6px;
+}
+.loading-code-icon {
+    animation: spinner 1s linear infinite;
+}
+@keyframes spinner {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.btn-send-code-disabled {
+    color: rgba(22, 24, 35, 0.34);
+    cursor: not-allowed;
+}
+
+.error-message {
+    font-size: 1.2rem;
+    line-height: 15px;
+    margin: 4px 0px;
+    color: rgb(255, 76, 58);
+    display: flex;
+}
+
+.menu-list {
+    width: 328px;
+    max-height: 320px;
+    background: rgb(255, 255, 255);
+    border: 0.5px solid rgba(22, 24, 35, 0.12);
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    cursor: pointer;
+
+    & .search-phone-country-container {
+        height: 35px;
+        width: 100%;
+        border-bottom: 1px solid rgba(22, 24, 35, 0.12);
+        background: rgb(255, 255, 255);
+        margin-top: 4px;
+        display: flex;
+        justify-content: space-between;
+        flex-shrink: 0;
+        margin-top: -6px;
+    }
+    & .search-icon {
+        margin: 0px 15px;
+        color: rgba(22, 24, 35, 0.5);
+        display: flex;
+        align-items: center;
+        width: 14px;
+    }
+    & .input-search {
+        flex: 1 1 0%;
+        color: rgb(22, 24, 35);
+        background: rgb(255, 255, 255);
+        caret-color: rgb(254, 44, 85);
+    }
+    & .phone-country-list {
+        flex: 1 1 0%;
+        overflow: overlay;
+        display: flex;
+        flex-direction: column;
+    }
+    & .phone-country-item {
+        color: rgba(22, 24, 35);
+        display: flex;
+        padding: 0px 12px;
+        justify-content: space-between;
+        align-items: center;
+        height: 34px;
+        line-height: 34px;
+        font-size: 1.3rem;
+        &:hover {
+            background-color: rgba(22, 24, 35, 0.03);
+        }
+    }
+}

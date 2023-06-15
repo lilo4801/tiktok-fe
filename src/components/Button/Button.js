@@ -27,9 +27,9 @@ function Button({
         ...passProps,
     };
 
-    if (disabled) {
-        delete props.disabled;
-    }
+    // if (disabled) {
+    //     delete props.disabled;
+    // }
 
     if (to) {
         props.to = to;

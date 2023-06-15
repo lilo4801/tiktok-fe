@@ -19,6 +19,7 @@ import 'tippy.js/dist/tippy.css';
 import classNames from 'classnames/bind';
 import Menu from '~/components/Popper/Menu';
 import {
+    BackIcon,
     CloseIcon,
     InboxIcon,
     LoginWithAccountIcon,
@@ -37,6 +38,7 @@ import config from '~/config';
 import { useState } from 'react';
 import Modal from '~/components/Modal/Modal';
 import LoginItem from './LoginItem';
+import { LoginFormWithPhonePassword } from '~/components/Auth';
 
 const cx = classNames.bind(styles);
 
@@ -105,21 +107,35 @@ const USER_MENU = [
 
 const MENU_AUTH = {
     signin: {
-        title: 'Log in to Tiktok',
         data: [
-            { icon: <LoginWithQRCodeIcon />, title: 'Use QR code' },
-            { icon: <LoginWithAccountIcon />, title: 'Use phone / email / username' },
-            { icon: <LoginWithGoogleIcon />, title: 'Continue with Google' },
-            { icon: <LoginWithTwitterIcon />, title: 'Continue with Twitter' },
-            { icon: <LoginWithLINEIcon />, title: 'Continue with LINE' },
-            { icon: <LoginWithInstagramIcon />, title: 'Continue with Instagram' },
-            { icon: <LoginWithQRCodeIcon />, title: 'Use QR code' },
-            { icon: <LoginWithAccountIcon />, title: 'Use phone / email / username' },
+            {
+                icon: <LoginWithQRCodeIcon />,
+                title: 'Use QR code',
+                children: {
+                    data: [
+                        {
+                            Component: LoginFormWithPhonePassword,
+                        },
+                    ],
+                },
+            },
+            {
+                icon: <LoginWithAccountIcon />,
+                title: 'Use phone / email / username',
+                children: {
+                    data: [
+                        {
+                            Component: LoginFormWithPhonePassword,
+                        },
+                    ],
+                },
+            },
             { icon: <LoginWithGoogleIcon />, title: 'Continue with Google' },
             { icon: <LoginWithTwitterIcon />, title: 'Continue with Twitter' },
             { icon: <LoginWithLINEIcon />, title: 'Continue with LINE' },
             { icon: <LoginWithInstagramIcon />, title: 'Continue with Instagram' },
         ],
+        title: 'Log in to Tiktok',
         titleFooter: "Don't have an account?",
         button: 'Sign up',
     },
@@ -139,12 +155,22 @@ const MENU_AUTH = {
 
 function Header() {
     const currentUser = false;
-    const [isAlreadyAccount, setIsAlreadyAccount] = useState(false);
+    const [isAlreadyAccount, setIsAlreadyAccount] = useState(true);
     const [showModalLogin, setShowModalLogin] = useState(false);
 
     let showMenuAuth = isAlreadyAccount ? MENU_AUTH.signin : MENU_AUTH.signup;
+    const [history, setHistory] = useState([{ data: showMenuAuth.data }]);
+    const current = history[history.length - 1];
+
     const handleShowClose = () => {
         setShowModalLogin(!showModalLogin);
+    };
+
+    const handleBack = () => {
+        setHistory((prev) => prev.slice(0, prev.length - 1));
+    };
+    const handleMore = (data) => {
+        setHistory((prev) => [...prev, data.children]);
     };
 
     return (
@@ -187,17 +213,24 @@ function Header() {
                                     <h2>{showMenuAuth.title}</h2>
                                     <div className={cx('modal-login-content')}>
                                         <div className={cx('type-login-box')}>
-                                            {showMenuAuth.data.map((item, index) => {
-                                                return <LoginItem key={index} data={item} />;
+                                            {current.data.map((item, index) => {
+                                                if (!!item.Component) {
+                                                    return <item.Component onClick={handleMore} key={index} />;
+                                                } else {
+                                                    return <LoginItem onClick={handleMore} key={index} data={item} />;
+                                                }
                                             })}
                                         </div>
                                     </div>
-                                    <div className={cx('policy-box')}>
-                                        <p className={cx('login-policy')}>
-                                            By continuing, you agree to TikTok’s Terms of Service and confirm that you
-                                            have read TikTok’s Privacy Policy.
-                                        </p>
-                                    </div>
+                                    {history.length <= 1 && (
+                                        <div className={cx('policy-box')}>
+                                            <p className={cx('login-policy')}>
+                                                By continuing, you agree to TikTok’s Terms of Service and confirm that
+                                                you have read TikTok’s Privacy Policy.
+                                            </p>
+                                        </div>
+                                    )}
+
                                     <div className={cx('footer-modal')}>
                                         <p>{showMenuAuth.titleFooter}</p>
                                         <Button
@@ -208,6 +241,12 @@ function Header() {
                                             <p>{showMenuAuth.button}</p>
                                         </Button>
                                     </div>
+                                    {history.length >= 2 && (
+                                        <div onClick={handleBack} className={cx('back-btn')}>
+                                            <BackIcon />
+                                        </div>
+                                    )}
+
                                     <div onClick={handleShowClose} className={cx('close-modal')}>
                                         <CloseIcon />
                                     </div>

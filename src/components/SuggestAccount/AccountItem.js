@@ -9,7 +9,7 @@ import { Fragment } from 'react';
 const cx = classNames.bind(styles);
 
 function AccountItem({ data }) {
-    let Component = Fragment;
+    let Component = 'div';
     if (!data.statusRelationship) {
         Component = AccountPreview;
     }
