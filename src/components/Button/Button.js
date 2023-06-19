@@ -34,10 +34,11 @@ function Button({
     if (to) {
         props.to = to;
         Component = Link;
-    } else {
-        props.href = href;
-        Component = 'a';
     }
+    //  else {
+    //     props.href = href;
+    //     Component = 'a';
+    // }
     const classes = cx('wrapper', {
         [className]: className,
         primary,

@@ -5,91 +5,96 @@ import LoginFormWithPhoneCode from './LoginFormWithPhoneCode';
 import { useState } from 'react';
 import { StringUtils } from '~/utils';
 import { LoadingIcon } from '../Icons';
-
+import { FastField, Form, Formik } from 'formik';
+import InputField from './InputField';
+import * as Yup from 'yup';
 const cx = classNames.bind(styles);
 
 function LoginFormWithEmailPassword({ onClick }) {
-    const [usernameValue, setUsernameValue] = useState('');
-    const [passwordValue, setPasswordValue] = useState('');
-    const [showErrorInput, setShowErrorInput] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (values) => {
         setLoading(true);
         setTimeout(() => {
-            setShowErrorInput(true);
             setLoading(false);
         }, 2000);
     };
 
+    const initialValues = {
+        email: '',
+        password: '',
+    };
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().email().required('This field is required'),
+        password: Yup.string().required('This field is required'),
+    });
+
     return (
-        <form className={cx('wrapper')}>
-            <div className={cx('container')}>
-                <div className={cx('description-title')}>
-                    <p>Email or username</p>
-                    <Button
-                        onClick={() => {
-                            onClick({
-                                children: {
-                                    data: [
-                                        {
-                                            Component: LoginFormWithPhoneCode,
-                                        },
-                                    ],
-                                },
-                            });
-                        }}
-                        className={cx('switch-type')}
-                        text
-                    >
-                        Log in with phone
-                    </Button>
-                </div>
-                <div className={cx('input-box')}>
-                    <div className={cx('password-input-box')}>
-                        <div className={cx('input-container')}>
-                            <input
+        <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+            validator={() => ({})}
+        >
+            {(formikProps) => {
+                const { values } = formikProps;
+
+                return (
+                    <Form className={cx('wrapper')}>
+                        <div className={cx('container')}>
+                            <div className={cx('description-title')}>
+                                <p>Email or username</p>
+                                <Button
+                                    onClick={() => {
+                                        onClick({
+                                            children: {
+                                                data: [
+                                                    {
+                                                        Component: LoginFormWithPhoneCode,
+                                                    },
+                                                ],
+                                            },
+                                        });
+                                    }}
+                                    className={cx('switch-type')}
+                                    text
+                                >
+                                    Log in with phone
+                                </Button>
+                            </div>
+                            <FastField
+                                name="email"
+                                component={InputField}
                                 type="text"
-                                value={usernameValue}
-                                onChange={(e) => setUsernameValue(e.target.value)}
+                                label="Email or username"
                                 placeholder="Email or username"
                             />
-                        </div>
-                    </div>
-                </div>
-                <div className={cx('input-box')}>
-                    <div className={cx('password-input-box')}>
-                        <div className={cx('input-container')}>
-                            <input
-                                type="text"
-                                value={passwordValue}
-                                onChange={(e) => setPasswordValue(e.target.value)}
+                            <FastField
+                                name="password"
+                                component={InputField}
+                                type="password"
+                                label="Password"
                                 placeholder="Password"
                             />
+
+                            <div className={cx('description-title-password')}>
+                                <Button className={cx('switch-type')} text>
+                                    Forgot password?
+                                </Button>
+                            </div>
+                            <Button
+                                type="submit"
+                                disabled={StringUtils.isEmpty(values.email) || StringUtils.isEmpty(values.password)}
+                                primary
+                                className={cx('btn-login')}
+                            >
+                                {loading ? <LoadingIcon className={cx('loading-code-icon')} /> : ' Log in'}
+                            </Button>
                         </div>
-                    </div>
-                    {showErrorInput && (
-                        <div className={cx('error-message')}>
-                            <span>Username or password doesn't match our records. Try again.</span>
-                        </div>
-                    )}
-                </div>
-                <div className={cx('description-title-password')}>
-                    <Button className={cx('switch-type')} text>
-                        Forgot password?
-                    </Button>
-                </div>
-                <Button
-                    disabled={StringUtils.isEmpty(usernameValue) || StringUtils.isEmpty(passwordValue)}
-                    primary
-                    className={cx('btn-login')}
-                    onClick={handleSubmit}
-                >
-                    {loading ? <LoadingIcon className={cx('loading-code-icon')} /> : ' Log in'}
-                </Button>
-            </div>
-        </form>
+                    </Form>
+                );
+            }}
+        </Formik>
     );
 }
 
