@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
 import { useDebounce } from '~/hooks';
-import { searchService } from '~/services';
+import { searchApi } from '~/services';
 
 const cx = classNames.bind(styles);
 
@@ -29,10 +29,13 @@ function Search() {
         }
         const fetchApi = async () => {
             setLoading(true);
+            const params = {
+                q: debounceValue,
+                type: 'less',
+            };
+            const result = await searchApi.search(params);
 
-            const result = await searchService.search(debounceValue);
-
-            setSearchResults(result);
+            setSearchResults(result.data);
             setLoading(false);
         };
         fetchApi();

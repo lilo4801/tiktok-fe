@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Image from '../Image/Image';
 import { TickIcon } from '../Icons';
 import AccountPreview from '../Popper/AccountPreview/AccountPreview';
-import { Fragment } from 'react';
 
 const cx = classNames.bind(styles);
 

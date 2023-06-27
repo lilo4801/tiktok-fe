@@ -7,10 +7,15 @@ import { FastField, Formik, Form, Field } from 'formik';
 import PhoneInputField from './PhoneInputField';
 import InputCodeField from './InputCodeField';
 import * as Yup from 'yup';
-
+import PropTypes from 'prop-types';
 const cx = classNames.bind(styles);
 
-function LoginFormWithPhoneCode({ onClick }) {
+LoginFormWithPhoneCode.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    onSubmitForm: PropTypes.func.isRequired,
+};
+
+function LoginFormWithPhoneCode({ onClick, onSubmitForm }) {
     const initialValues = {
         phone: '',
         code: '',
@@ -26,7 +31,7 @@ function LoginFormWithPhoneCode({ onClick }) {
         }),
     });
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={() => console.log(11)}>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmitForm}>
             {(formikProps) => {
                 return (
                     <Form className={cx('wrapper')}>

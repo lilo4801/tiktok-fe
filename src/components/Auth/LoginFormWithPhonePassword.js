@@ -8,10 +8,17 @@ import { FastField, Form, Formik } from 'formik';
 import InputField from './InputField';
 import PhoneInputField from './PhoneInputField';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
+import { LoadingIcon } from '../Icons';
 
 const cx = classNames.bind(styles);
 
-function LoginFormWithPhonePassword({ onClick }) {
+LoginFormWithPhonePassword.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    onSubmitForm: PropTypes.func.isRequired,
+};
+
+function LoginFormWithPhonePassword({ onClick, onSubmitForm }) {
     const initialValues = {
         phone: '',
         password: '',
@@ -22,9 +29,9 @@ function LoginFormWithPhonePassword({ onClick }) {
     });
 
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema}>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmitForm}>
             {(formikProps) => {
-                const { values } = formikProps;
+                const { values, isSubmitting } = formikProps;
                 return (
                     <Form className={cx('wrapper')}>
                         <div className={cx('container')}>
@@ -92,7 +99,7 @@ function LoginFormWithPhonePassword({ onClick }) {
                                 primary
                                 className={cx('btn-login')}
                             >
-                                Log in
+                                {isSubmitting && <LoadingIcon className={cx('loading-code-icon')} />} Log in
                             </Button>
                         </div>
                     </Form>

@@ -2,77 +2,22 @@ import classNames from 'classnames/bind';
 import styles from './SuggestAccount.module.scss';
 import PropTypes from 'prop-types';
 import AccountItem from './AccountItem';
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
-function SuggestAccount({ label, url }) {
-    const [loading, setLoading] = useState(true);
-    const [results, setResults] = useState([]);
-    useEffect(() => {
-        // call api
-
-        setTimeout(() => {
-            if (url === 'following-accounts') {
-                setResults([
-                    {
-                        image: '',
-                        nickname: 'quoc.nguyentran',
-                        fullname: 'Quoc Nguyen Tran',
-                        tick: true,
-                        statusRelationship: true, // true for followng overwise
-                    },
-                    {
-                        image: '',
-                        nickname: 'huynh.ngan',
-                        fullname: 'Huynh Nguyen Ngan',
-                        tick: false,
-                        statusRelationship: true,
-                    },
-                ]);
-            } else {
-                setResults([
-                    {
-                        image: '',
-                        nickname: 'quoc.nguyentran',
-                        fullname: 'Quoc Nguyen Tran',
-                        tick: true,
-                        statusRelationship: false, // true for followng overwise
-                    },
-                    {
-                        image: '',
-                        nickname: 'huynh.ngan',
-                        fullname: 'Huynh Nguyen Ngan',
-                        tick: false,
-                        statusRelationship: false,
-                    },
-                ]);
-            }
-
-            setLoading(false);
-        }, 2000);
-        return () => {};
-    }, []);
-
-    const handleClickShowMore = () => {
-        setLoading(true);
-        setTimeout(() => {
-            setResults((prev) => [...prev, ...prev]);
-            setLoading(false);
-        }, 2000);
-    };
-
+function SuggestAccount({ label, items, onClickSeeMore }) {
     return (
         <div className={cx('wrapper')}>
             <p className={cx('label')}>{label}</p>
-            {results.map((item, index) => (
+            {items.data.map((item, index) => (
                 <Link key={index} to={`/@${item.nickname}`}>
                     <AccountItem data={item} />
                 </Link>
             ))}
 
-            {loading && (
+            {items.loading && (
                 <div className={cx('account-preview-loading')}>
                     <div className={cx('avatar-loading')}></div>
                     <div className={cx('info-loading')}>
@@ -82,7 +27,7 @@ function SuggestAccount({ label, url }) {
                 </div>
             )}
 
-            <button className={cx('btn-more')} onClick={handleClickShowMore}>
+            <button className={cx('btn-more')} onClick={() => onClickSeeMore(label)}>
                 <p className={cx('extend')}>See more</p>
             </button>
         </div>
@@ -93,4 +38,4 @@ SuggestAccount.propTypes = {
     label: PropTypes.string.isRequired,
 };
 
-export default SuggestAccount;
+export default memo(SuggestAccount);

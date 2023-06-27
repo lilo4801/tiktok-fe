@@ -33,12 +33,14 @@ import {
 } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '~/layouts/components/Search';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import config from '~/config';
 import { useState } from 'react';
 import Modal from '~/components/Modal/Modal';
 import LoginItem from './LoginItem';
 import { LoginFormWithPhonePassword } from '~/components/Auth';
+import { useDispatch } from 'react-redux';
+import { accountApi } from '~/services';
 
 const cx = classNames.bind(styles);
 
@@ -154,9 +156,11 @@ const MENU_AUTH = {
 };
 
 function Header() {
-    const currentUser = false;
     const [isAlreadyAccount, setIsAlreadyAccount] = useState(true);
     const [showModalLogin, setShowModalLogin] = useState(false);
+    const [currentUser, setCurrentUser] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     let showMenuAuth = isAlreadyAccount ? MENU_AUTH.signin : MENU_AUTH.signup;
     const [history, setHistory] = useState([{ data: showMenuAuth.data }]);
@@ -171,6 +175,23 @@ function Header() {
     };
     const handleMore = (data) => {
         setHistory((prev) => [...prev, data.children]);
+    };
+
+    const handleSubmitLoginForm = (values) => {
+        return new Promise((resolve) => {
+            const requestLogin = async () => {
+                try {
+                    const res = await accountApi.login(values);
+                    localStorage.setItem('token', res.data.accessToken);
+                    setShowModalLogin(false);
+                    resolve(true);
+                    navigate('home');
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+            requestLogin();
+        });
     };
 
     return (
@@ -215,7 +236,13 @@ function Header() {
                                         <div className={cx('type-login-box')}>
                                             {current.data.map((item, index) => {
                                                 if (!!item.Component) {
-                                                    return <item.Component onClick={handleMore} key={index} />;
+                                                    return (
+                                                        <item.Component
+                                                            onSubmitForm={handleSubmitLoginForm}
+                                                            onClick={handleMore}
+                                                            key={index}
+                                                        />
+                                                    );
                                                 } else {
                                                     return <LoginItem onClick={handleMore} key={index} data={item} />;
                                                 }

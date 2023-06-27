@@ -14,7 +14,7 @@ function AccountPreview({ data, children }) {
             <Tippy
                 interactive
                 placement="bottom"
-                delay={[1000, 0]}
+                delay={[800, 0]}
                 hideOnClick={false}
                 render={(attrs) => (
                     <div className={cx('account-detail')} tabIndex="-1" {...attrs}>

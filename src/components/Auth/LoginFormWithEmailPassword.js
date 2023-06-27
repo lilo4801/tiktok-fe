@@ -8,17 +8,24 @@ import { LoadingIcon } from '../Icons';
 import { FastField, Form, Formik } from 'formik';
 import InputField from './InputField';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
+
 const cx = classNames.bind(styles);
 
-function LoginFormWithEmailPassword({ onClick }) {
+LoginFormWithEmailPassword.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    onSubmitForm: PropTypes.func.isRequired,
+};
+
+function LoginFormWithEmailPassword({ onClick, onSubmitForm }) {
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (values) => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    };
+    // const handleSubmit = (values) => {
+    //     setLoading(true);
+    //     setTimeout(() => {
+    //         setLoading(false);
+    //     }, 2000);
+    // };
 
     const initialValues = {
         email: '',
@@ -33,7 +40,7 @@ function LoginFormWithEmailPassword({ onClick }) {
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+            onSubmit={onSubmitForm}
             validator={() => ({})}
         >
             {(formikProps) => {
