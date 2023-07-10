@@ -17,3 +17,9 @@ export const YesNoObj = {
     YES: 'Y',
     NO: 'N',
 };
+
+export const TYPE_SHARE_TAB = {
+    IMAGE_TYPE: 1,
+    FAR_TYPE: 2,
+    LIKE_TYPE: 3,
+};

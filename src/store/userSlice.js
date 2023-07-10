@@ -2,8 +2,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { accountApi } from '~/services';
 
 export const getMe = createAsyncThunk('user/getMe', async (params, thunkApi) => {
-    const res = await accountApi.getMe();
-    return res;
+    // const res = await accountApi.getMe();
+
+    await setTimeout(() => {
+        console.log('getting');
+    }, 3000);
+    return {
+        id: 1,
+        nickname: 'lilo4801',
+        username: 'lilo4801',
+    };
 });
 
 const userSlice = createSlice({

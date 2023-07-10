@@ -8,17 +8,14 @@ import { unwrapResult } from '@reduxjs/toolkit';
 function App() {
     const dispatch = useDispatch();
     useEffect(() => {
-        const userLogin = async () => {
+        const userAlreadyLogin = async () => {
             try {
                 const action = getMe();
                 const actionResult = await dispatch(action);
                 const result = unwrapResult(actionResult);
-                console.log(result);
-            } catch (error) {
-                console.log(error);
-            }
+            } catch (error) {}
         };
-        userLogin();
+        userAlreadyLogin();
     }, []);
 
     return (

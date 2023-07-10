@@ -39,8 +39,9 @@ import { useState } from 'react';
 import Modal from '~/components/Modal/Modal';
 import LoginItem from './LoginItem';
 import { LoginFormWithPhonePassword } from '~/components/Auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { accountApi } from '~/services';
+import ObjectUtils from '~/utils/ObjectUtils';
 
 const cx = classNames.bind(styles);
 
@@ -156,11 +157,16 @@ const MENU_AUTH = {
 };
 
 function Header() {
+    const navigate = useNavigate();
     const [isAlreadyAccount, setIsAlreadyAccount] = useState(true);
     const [showModalLogin, setShowModalLogin] = useState(false);
-    const [currentUser, setCurrentUser] = useState(false);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const currentLogin = useSelector((state) => state.user);
+
+    const isLogin = !ObjectUtils.isEmptyObject(currentLogin.currentUser);
+    const loading = currentLogin.loading;
+    if (isLogin) {
+        USER_MENU[0].to = `/@lilo4801`;
+    }
 
     let showMenuAuth = isAlreadyAccount ? MENU_AUTH.signin : MENU_AUTH.signup;
     const [history, setHistory] = useState([{ data: showMenuAuth.data }]);
@@ -203,7 +209,7 @@ function Header() {
                 {/* search */}
                 <Search />
                 <div className={cx('actions')}>
-                    {currentUser ? (
+                    {isLogin ? (
                         <>
                             <Tippy content="Upload video" placement="bottom">
                                 <button className={cx('action-btn')}>
@@ -281,19 +287,21 @@ function Header() {
                             </Modal>
                         </>
                     )}
-                    <Menu items={currentUser ? USER_MENU : MENU_ITEMS}>
-                        {currentUser ? (
-                            <Image
-                                className={cx('user-avatar')}
-                                alt="avatar"
-                                src="https://th.bing.com/th/id/R.1da9fc7091005b1d71a37cf5ad2fb865?rik=Pqa01c8QKJ5d3Q&riu=http%3a%2f%2fimages2.fanpop.com%2fimage%2fphotos%2f11900000%2fLuffy-one-piece-11990420-2560-2286.jpg&ehk=trmqe1sBZ7yVcQXTLfcFT4itA%2fJneElCf4em5jhG%2fJo%3d&risl=&pid=ImgRaw&r=0"
-                            />
-                        ) : (
-                            <button className={cx('more-btn')}>
-                                <FontAwesomeIcon icon={faEllipsisVertical} />
-                            </button>
-                        )}
-                    </Menu>
+                    {!loading && (
+                        <Menu items={isLogin ? USER_MENU : MENU_ITEMS}>
+                            {isLogin ? (
+                                <Image
+                                    className={cx('user-avatar')}
+                                    alt="avatar"
+                                    src="https://th.bing.com/th/id/R.1da9fc7091005b1d71a37cf5ad2fb865?rik=Pqa01c8QKJ5d3Q&riu=http%3a%2f%2fimages2.fanpop.com%2fimage%2fphotos%2f11900000%2fLuffy-one-piece-11990420-2560-2286.jpg&ehk=trmqe1sBZ7yVcQXTLfcFT4itA%2fJneElCf4em5jhG%2fJo%3d&risl=&pid=ImgRaw&r=0"
+                                />
+                            ) : (
+                                <button className={cx('more-btn')}>
+                                    <FontAwesomeIcon icon={faEllipsisVertical} />
+                                </button>
+                            )}
+                        </Menu>
+                    )}
                 </div>
             </div>
         </header>
